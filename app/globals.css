@@ -1,0 +1,142 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* Academic warm palette */
+  --background: #faf8f3;
+  --foreground: #2d3436;
+  --card: #ffffff;
+  --card-foreground: #2d3436;
+  --popover: #ffffff;
+  --popover-foreground: #2d3436;
+  --primary: #1b4332;
+  --primary-foreground: #ffffff;
+  --secondary: #d4a574;
+  --secondary-foreground: #1b4332;
+  --muted: #e8dcc8;
+  --muted-foreground: #636363;
+  --accent: #c97a3a;
+  --accent-foreground: #ffffff;
+  --destructive: #dc3545;
+  --destructive-foreground: #ffffff;
+  --border: #e0d5c7;
+  --input: #f5f3f0;
+  --ring: #c97a3a;
+  --chart-1: #1b4332;
+  --chart-2: #d4a574;
+  --chart-3: #c97a3a;
+  --chart-4: #8b7355;
+  --chart-5: #d4c5b9;
+  --radius: 0.625rem;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #2d3436;
+  --sidebar-primary: #1b4332;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #d4a574;
+  --sidebar-accent-foreground: #2d3436;
+  --sidebar-border: #e0d5c7;
+  --sidebar-ring: #c97a3a;
+}
+
+.dark {
+  --background: #1a1a1a;
+  --foreground: #f5f3f0;
+  --card: #242424;
+  --card-foreground: #f5f3f0;
+  --popover: #242424;
+  --popover-foreground: #f5f3f0;
+  --primary: #4a9d5f;
+  --primary-foreground: #1a1a1a;
+  --secondary: #d4a574;
+  --secondary-foreground: #1a1a1a;
+  --muted: #3a3a3a;
+  --muted-foreground: #a8a8a8;
+  --accent: #e8a563;
+  --accent-foreground: #1a1a1a;
+  --destructive: #f87171;
+  --destructive-foreground: #1a1a1a;
+  --border: #3a3a3a;
+  --input: #2a2a2a;
+  --ring: #e8a563;
+  --chart-1: #4a9d5f;
+  --chart-2: #d4a574;
+  --chart-3: #e8a563;
+  --chart-4: #a8927a;
+  --chart-5: #6b5d52;
+  --sidebar: #242424;
+  --sidebar-foreground: #f5f3f0;
+  --sidebar-primary: #4a9d5f;
+  --sidebar-primary-foreground: #1a1a1a;
+  --sidebar-accent: #d4a574;
+  --sidebar-accent-foreground: #1a1a1a;
+  --sidebar-border: #3a3a3a;
+  --sidebar-ring: #e8a563;
+}
+
+@theme inline {
+  --font-sans: var(--font-dm-sans), 'DM Sans', sans-serif;
+  --font-heading: var(--font-playfair), 'Playfair Display', serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-heading;
+  }
+  /* Math-themed SVG background pattern overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="math-pattern" x="0" y="0" width="60" height="60" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="%23d4a574" opacity="0.08"/><path d="M20 20 Q 30 15, 40 20" fill="none" stroke="%231b4332" stroke-width="0.5" opacity="0.05"/><line x1="0" y1="30" x2="60" y2="30" stroke="%23c97a3a" stroke-width="0.3" opacity="0.03"/></pattern></defs><rect width="60" height="60" fill="%23faf8f3"/><rect width="60" height="60" fill="url(%23math-pattern)"/></svg>');
+    pointer-events: none;
+    z-index: -1;
+  }
+}
