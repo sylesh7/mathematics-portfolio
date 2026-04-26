@@ -44,25 +44,25 @@ const certifications = [
 
 export default function Certifications() {
   return (
-    <section className="py-20 px-4 md:px-8 bg-background">
+    <section className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-background">
       <div className="max-w-4xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
             Certifications & Credentials
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-base sm:text-lg text-muted-foreground px-2">
             Professional qualifications and continuing education achievements
           </p>
         </motion.div>
 
         {/* Certifications List */}
-        <div className="space-y-4">
+        <div className="space-y-3 md:space-y-4">
           {certifications.map((cert, idx) => (
             <motion.div
               key={cert.title}
@@ -71,33 +71,33 @@ export default function Certifications() {
               transition={{ duration: 0.5, delay: idx * 0.08 }}
               viewport={{ once: true }}
               whileHover={{ x: 8 }}
-              className="p-6 bg-card rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300 group"
+              className="p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300 group"
             >
-              <div className="flex items-start gap-4">
+              <div className="flex items-start gap-3 md:gap-4">
                 <motion.div
                   initial={{ scale: 0 }}
                   whileInView={{ scale: 1 }}
                   transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
+                  className="w-10 md:w-12 h-10 md:h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
                 >
-                  <Award className="text-primary-foreground" size={24} />
+                  <Award className="text-primary-foreground" size={20} />
                 </motion.div>
 
-                <div className="flex-1">
-                  <h3 className="font-heading text-lg font-bold text-foreground mb-2">
+                <div className="flex-1 min-w-0">
+                  <h3 className="font-heading text-base md:text-lg font-bold text-foreground mb-1 md:mb-2 break-words">
                     {cert.title}
                   </h3>
 
-                  <p className="text-primary font-semibold mb-2">
+                  <p className="text-primary font-semibold text-sm md:text-base mb-1 md:mb-2">
                     {cert.issuer}
                   </p>
 
-                  <p className="text-muted-foreground text-sm mb-3">
+                  <p className="text-muted-foreground text-xs md:text-sm mb-2 md:mb-3 leading-relaxed">
                     {cert.description}
                   </p>
 
-                  <div className="flex items-center gap-2 text-sm text-muted-foreground">
+                  <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
                     <Calendar size={16} />
                     <span>{cert.year}</span>
                   </div>

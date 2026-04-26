@@ -4,28 +4,28 @@ import { motion } from 'framer-motion'
 
 export default function Hero() {
   return (
-    <section className="min-h-screen flex items-center justify-center pt-16 px-4 bg-gradient-to-br from-background via-background to-muted/30">
+    <section className="min-h-screen flex items-center justify-center pt-16 px-3 sm:px-4 md:px-8 bg-gradient-to-br from-background via-background to-muted/30">
       <div className="max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
           {/* Left Side - Text */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-6"
+            className="space-y-4 md:space-y-6"
           >
             <div>
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
-                className="inline-block mb-4"
+                className="inline-block mb-3 md:mb-4"
               >
-                <span className="text-primary font-heading font-semibold text-sm tracking-widest uppercase">
+                <span className="text-primary font-heading font-semibold text-xs sm:text-sm tracking-widest uppercase">
                   Education Excellence
                 </span>
               </motion.div>
-              <h1 className="font-heading text-5xl md:text-6xl font-bold text-foreground leading-tight mb-4">
+              <h1 className="font-heading text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight mb-3 md:mb-4">
                 <motion.span
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -49,7 +49,7 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.6 }}
-              className="text-lg text-muted-foreground leading-relaxed"
+              className="text-base sm:text-lg text-muted-foreground leading-relaxed"
             >
               Explore my innovative approach to mathematics education, combining pedagogical excellence with interactive learning experiences.
             </motion.p>
@@ -58,13 +58,13 @@ export default function Hero() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              className="flex gap-4"
+              className="flex flex-col sm:flex-row gap-3 pt-4 md:pt-0"
             >
               <button
                 onClick={() => {
                   document.getElementById('philosophy')?.scrollIntoView({ behavior: 'smooth' })
                 }}
-                className="px-8 py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors text-sm sm:text-base"
               >
                 Explore Portfolio
               </button>
@@ -72,7 +72,7 @@ export default function Hero() {
                 onClick={() => {
                   document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
                 }}
-                className="px-8 py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-colors"
+                className="px-6 sm:px-8 py-2.5 sm:py-3 border-2 border-primary text-primary font-semibold rounded-lg hover:bg-primary/10 transition-colors text-sm sm:text-base"
               >
                 Get in Touch
               </button>
@@ -84,7 +84,7 @@ export default function Hero() {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative h-96 md:h-full"
+            className="relative h-64 sm:h-80 md:h-full"
           >
             <div className="absolute inset-0 flex items-center justify-center">
               {/* Main shape */}

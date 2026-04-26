@@ -42,23 +42,23 @@ export default function Navigation() {
           : 'bg-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
+      <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-            className="font-heading text-xl font-bold text-primary hover:text-accent transition-colors"
+            className="font-heading text-lg sm:text-xl font-bold text-primary hover:text-accent transition-colors"
           >
             Mathematics
           </button>
 
           {/* Desktop Menu */}
-          <div className="hidden md:flex items-center gap-1">
+          <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
             {navItems.map((item) => (
               <button
                 key={item.id}
                 onClick={() => scrollToSection(item.id)}
-                className="px-3 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors"
+                className="px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors"
               >
                 {item.label}
               </button>

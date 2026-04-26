@@ -61,25 +61,25 @@ const lessons = [
 
 export default function LessonPlans() {
   return (
-    <section id="lessons" className="py-20 px-4 md:px-8 bg-card">
+    <section id="lessons" className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-card">
       <div className="max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
             Lesson Plans & Courses
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
             Comprehensive curriculum covering fundamental to advanced mathematics topics with interactive learning experiences.
           </p>
         </motion.div>
 
         {/* Bento Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {lessons.map((lesson, idx) => (
             <motion.div
               key={lesson.id}
@@ -87,17 +87,17 @@ export default function LessonPlans() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
               viewport={{ once: true }}
-              className={`relative overflow-hidden rounded-xl bg-gradient-to-br from-background to-muted/50 border border-border hover:border-primary hover:shadow-xl transition-all duration-300 group cursor-pointer ${
-                lesson.size === 'large' ? 'md:col-span-2' : 'md:col-span-1'
+              className={`relative overflow-hidden rounded-lg md:rounded-xl bg-gradient-to-br from-background to-muted/50 border border-border hover:border-primary hover:shadow-xl transition-all duration-300 group cursor-pointer ${
+                lesson.size === 'large' ? 'sm:col-span-2 lg:col-span-1' : 'sm:col-span-1'
               }`}
             >
-              <div className="h-48 md:h-56 p-6 md:p-8 flex flex-col justify-between relative z-10">
+              <div className="min-h-48 sm:min-h-56 p-4 md:p-6 lg:p-8 flex flex-col justify-between relative z-10">
                 <div>
-                  <div className="text-4xl mb-4 opacity-40">{lesson.icon}</div>
-                  <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground mb-2">
+                  <div className="text-3xl md:text-4xl mb-3 md:mb-4 opacity-40">{lesson.icon}</div>
+                  <h3 className="font-heading text-base md:text-xl lg:text-2xl font-bold text-foreground mb-2">
                     {lesson.title}
                   </h3>
-                  <p className="text-sm md:text-base text-muted-foreground">
+                  <p className="text-xs md:text-sm lg:text-base text-muted-foreground">
                     {lesson.description}
                   </p>
                 </div>

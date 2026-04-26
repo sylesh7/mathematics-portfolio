@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 
@@ -45,94 +45,113 @@ const philosophies = [
 
 export default function Philosophy() {
   const [currentIndex, setCurrentIndex] = useState(0)
+  const [itemsPerView, setItemsPerView] = useState(3)
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth < 768) {
+        setItemsPerView(1)
+      } else if (window.innerWidth < 1024) {
+        setItemsPerView(2)
+      } else {
+        setItemsPerView(3)
+      }
+    }
+
+    handleResize()
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const next = () => {
-    setCurrentIndex((prev) => (prev + 1) % philosophies.length)
+    setCurrentIndex((prev) => (prev + itemsPerView) % philosophies.length)
   }
 
   const prev = () => {
-    setCurrentIndex((prev) => (prev - 1 + philosophies.length) % philosophies.length)
+    setCurrentIndex((prev) => (prev - itemsPerView + philosophies.length) % philosophies.length)
   }
 
   const getVisibleItems = () => {
     const items = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < itemsPerView; i++) {
       items.push(philosophies[(currentIndex + i) % philosophies.length])
     }
     return items
   }
 
   return (
-    <section id="philosophy" className="py-20 px-4 md:px-8 bg-card">
+    <section id="philosophy" className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-card">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
             Teaching Philosophy
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
             My approach to mathematics education is rooted in six core principles that guide every lesson and interaction.
           </p>
         </motion.div>
 
         {/* Carousel */}
         <div className="relative">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6 md:mb-8">
             {getVisibleItems().map((item, idx) => (
               <motion.div
                 key={item.id}
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: idx * 0.1 }}
-                className="p-6 bg-background rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300 group"
+                className="p-4 md:p-6 bg-background rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300 group"
               >
-                <div className="text-4xl mb-3">{item.icon}</div>
-                <h3 className="font-heading text-xl font-bold text-foreground mb-3">
+                <div className="text-3xl md:text-4xl mb-3">{item.icon}</div>
+                <h3 className="font-heading text-lg md:text-xl font-bold text-foreground mb-3">
                   {item.title}
                 </h3>
-                <p className="text-muted-foreground leading-relaxed">
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
                   {item.description}
                 </p>
               </motion.div>
             ))}
           </div>
 
-          {/* Carousel Controls */}
-          <div className="flex items-center justify-between">
-            <button
-              onClick={prev}
-              className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-              aria-label="Previous philosophy"
-            >
-              <ChevronLeft size={24} />
-            </button>
+          {/* Carousel Controls - Only show if more than one view worth of items */}
+          {itemsPerView < philosophies.length && (
+            <div className="flex items-center justify-between gap-2">
+              <button
+                onClick={prev}
+                className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                aria-label="Previous philosophy"
+              >
+                <ChevronLeft size={20} />
+              </button>
 
-            <div className="flex gap-2">
-              {philosophies.map((_, idx) => (
-                <button
-                  key={idx}
-                  onClick={() => setCurrentIndex(idx)}
-                  className={`h-2 rounded-full transition-all ${
-                    idx === currentIndex ? 'bg-primary w-8' : 'bg-border w-2'
-                  }`}
-                  aria-label={`Go to philosophy ${idx + 1}`}
-                />
-              ))}
+              <div className="flex gap-2">
+                {Array.from({ length: Math.ceil(philosophies.length / itemsPerView) }).map((_, idx) => (
+                  <button
+                    key={idx}
+                    onClick={() => setCurrentIndex(idx * itemsPerView)}
+                    className={`h-2 rounded-full transition-all ${
+                      idx === Math.floor(currentIndex / itemsPerView) ? 'bg-primary w-8' : 'bg-border w-2'
+                    }`}
+                    aria-label={`Go to philosophy page ${idx + 1}`}
+                  />
+                ))}
+              </div>
+
+              <button
+                onClick={next}
+                className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
+                aria-label="Next philosophy"
+              >
+                <ChevronRight size={20} />
+              </button>
             </div>
-
-            <button
-              onClick={next}
-              className="p-2 rounded-full bg-primary text-primary-foreground hover:bg-primary/90 transition-colors"
-              aria-label="Next philosophy"
-            >
-              <ChevronRight size={24} />
-            </button>
-          </div>
+          )}
         </div>
       </div>
     </section>

@@ -50,25 +50,25 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="py-20 px-4 md:px-8 bg-background">
+    <section id="testimonials" className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-background">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 md:mb-16"
         >
-          <h2 className="font-heading text-4xl md:text-5xl font-bold text-foreground mb-4">
+          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
             Student & Colleague Testimonials
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
             What students, parents, and colleagues have to say about their experience working together.
           </p>
         </motion.div>
 
         {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
           {testimonials.map((testimonial, idx) => (
             <motion.div
               key={testimonial.id}
@@ -78,9 +78,9 @@ export default function Testimonials() {
               viewport={{ once: true }}
               className="relative group"
             >
-              <div className="h-full p-6 bg-card rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300">
+              <div className="h-full p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300">
                 {/* Stars */}
-                <div className="flex gap-1 mb-4">
+                <div className="flex gap-1 mb-3 md:mb-4">
                   {[...Array(testimonial.rating)].map((_, i) => (
                     <motion.div
                       key={i}
@@ -89,23 +89,23 @@ export default function Testimonials() {
                       transition={{ delay: idx * 0.1 + i * 0.05 }}
                       viewport={{ once: true }}
                     >
-                      <Star size={16} className="fill-accent text-accent" />
+                      <Star size={14} className="fill-accent text-accent" />
                     </motion.div>
                   ))}
                 </div>
 
                 {/* Quote mark */}
-                <div className="text-4xl text-primary/20 mb-3">&ldquo;</div>
+                <div className="text-3xl md:text-4xl text-primary/20 mb-2 md:mb-3">&ldquo;</div>
 
                 {/* Text */}
-                <p className="text-muted-foreground leading-relaxed mb-6 italic">
+                <p className="text-sm md:text-base text-muted-foreground leading-relaxed mb-4 md:mb-6 italic">
                   {testimonial.text}
                 </p>
 
                 {/* Author */}
-                <div className="border-t border-border pt-4">
-                  <p className="font-semibold text-foreground">{testimonial.name}</p>
-                  <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                <div className="border-t border-border pt-3 md:pt-4">
+                  <p className="font-semibold text-foreground text-sm md:text-base">{testimonial.name}</p>
+                  <p className="text-xs md:text-sm text-muted-foreground">{testimonial.role}</p>
                 </div>
               </div>
 
