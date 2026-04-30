@@ -43,10 +43,10 @@ export default function TimelineSection() {
           </p>
           <div className="flex flex-wrap gap-2">
             <span className="text-xs px-3 py-1 bg-accent/10 border border-accent/30 rounded-full text-accent font-medium">
-              🔧 Methodology Development
+              Methodology Development
             </span>
             <span className="text-xs px-3 py-1 bg-accent/10 border border-accent/30 rounded-full text-accent font-medium">
-              💻 Technology Integration
+              Technology Integration
             </span>
           </div>
         </motion.div>
@@ -69,13 +69,13 @@ export default function TimelineSection() {
           </p>
           <div className="space-y-1">
             <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              🏆 Innovation Award
+              Innovation Award
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              ⭐ Teacher Excellence Recognition
+              Teacher Excellence Recognition
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              📈 Student Achievement Excellence
+              Student Achievement Excellence
             </div>
           </div>
         </motion.div>
@@ -98,13 +98,13 @@ export default function TimelineSection() {
           </p>
           <div className="space-y-2">
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              👥 Mentoring multiple educators
+              Mentoring multiple educators
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              📋 Curriculum Development Lead
+              Curriculum Development Lead
             </div>
             <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              🎓 Teacher Training Programs
+              Teacher Training Programs
             </div>
           </div>
         </motion.div>
@@ -127,10 +127,10 @@ export default function TimelineSection() {
           </p>
           <div className="flex flex-wrap gap-2">
             <span className="text-xs px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium">
-              🌐 Online Platforms
+              Online Platforms
             </span>
             <span className="text-xs px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium">
-              🎥 Interactive Courses
+              Interactive Courses
             </span>
           </div>
         </motion.div>
@@ -152,7 +152,7 @@ export default function TimelineSection() {
             Continuing to innovate and explore new ways to make mathematics education transformative and impactful for the next generation.
           </p>
           <div className="inline-block px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-lg">
-            <span className="text-xs md:text-sm font-semibold text-primary">🚀 Innovating Education</span>
+            <span className="text-xs md:text-sm font-semibold text-primary">Innovating Education</span>
           </div>
         </motion.div>
       ),

@@ -46,7 +46,7 @@ const lessons = [
     topics: 'Distribution, Inference, Experiments',
     difficulty: 'Intermediate',
     size: 'large',
-    icon: '📊'
+    icon: ''
   },
   {
     id: 6,

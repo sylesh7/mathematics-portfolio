@@ -9,37 +9,37 @@ const philosophies = [
     id: 1,
     title: 'Student-Centered Learning',
     description: 'Every student has unique learning needs. I design lessons that adapt to individual paces and learning styles, ensuring mathematical concepts are accessible to everyone.',
-    icon: '🎓'
+    icon: ''
   },
   {
     id: 2,
     title: 'Conceptual Understanding',
     description: 'Rather than rote memorization, I emphasize deep conceptual understanding. Students learn the "why" behind mathematical principles, building strong foundations.',
-    icon: '🧠'
+    icon: ''
   },
   {
     id: 3,
     title: 'Real-World Application',
     description: 'Mathematics comes alive when connected to real-world problems. I integrate practical applications that show students the relevance and beauty of mathematics.',
-    icon: '🌍'
+    icon: ''
   },
   {
     id: 4,
     title: 'Interactive Discovery',
     description: 'Learning through exploration and discovery creates deeper engagement. My lessons use manipulatives, technology, and collaborative activities.',
-    icon: '🔍'
+    icon: ''
   },
   {
     id: 5,
     title: 'Growth Mindset',
     description: 'I cultivate a classroom culture where mistakes are learning opportunities. Students develop resilience and confidence in their mathematical abilities.',
-    icon: '🚀'
+    icon: ''
   },
   {
     id: 6,
     title: 'Technology Integration',
     description: 'Strategic use of educational technology enhances learning without replacing human connection. Tools amplify understanding and engagement.',
-    icon: '💻'
+    icon: ''
   }
 ]
 

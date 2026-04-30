@@ -58,7 +58,7 @@ export default function About() {
           >
             <div className="p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary transition-colors">
               <div className="flex items-start gap-3 md:gap-4">
-                <div className="text-2xl md:text-3xl flex-shrink-0">🏆</div>
+                <div className="text-2xl md:text-3xl flex-shrink-0"></div>
                 <div>
                   <h3 className="font-heading font-bold text-foreground mb-1 md:mb-2 text-base md:text-lg">Award-Winning Educator</h3>
                   <p className="text-sm md:text-base text-muted-foreground">Recognized for innovative teaching methods and student achievement results.</p>
@@ -68,7 +68,7 @@ export default function About() {
 
             <div className="p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary transition-colors">
               <div className="flex items-start gap-3 md:gap-4">
-                <div className="text-2xl md:text-3xl flex-shrink-0">📚</div>
+                <div className="text-2xl md:text-3xl flex-shrink-0"></div>
                 <div>
                   <h3 className="font-heading font-bold text-foreground mb-1 md:mb-2 text-base md:text-lg">Curriculum Developer</h3>
                   <p className="text-sm md:text-base text-muted-foreground">Created comprehensive curricula integrating modern pedagogical approaches with technology.</p>
@@ -78,7 +78,7 @@ export default function About() {
 
             <div className="p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary transition-colors">
               <div className="flex items-start gap-3 md:gap-4">
-                <div className="text-2xl md:text-3xl flex-shrink-0">🌟</div>
+                <div className="text-2xl md:text-3xl flex-shrink-0"></div>
                 <div>
                   <h3 className="font-heading font-bold text-foreground mb-1 md:mb-2 text-base md:text-lg">Continuous Learner</h3>
                   <p className="text-sm md:text-base text-muted-foreground">Committed to professional development and staying current with educational research.</p>
