@@ -1,22 +1,24 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import Link from 'next/link'
 import { Menu, X } from 'lucide-react'
+import { usePathname } from 'next/navigation'
 
 const navItems = [
-  { id: 'philosophy', label: 'Philosophy' },
-  { id: 'about', label: 'About' },
-  { id: 'lessons', label: 'Lessons' },
-  { id: 'materials', label: 'Materials' },
-  { id: 'timeline', label: 'Timeline' },
-  { id: 'skills', label: 'Skills' },
-  { id: 'testimonials', label: 'Testimonials' },
-  { id: 'contact', label: 'Contact' },
+  { href: '/philosophy', label: 'Philosophy' },
+  { href: '/about', label: 'About' },
+  { href: '/lessons', label: 'Lessons' },
+  { href: '/timeline', label: 'Timeline' },
+  { href: '/skills', label: 'Skills' },
+  { href: '/certifications', label: 'Certifications' },
+  { href: '/contact', label: 'Contact' },
 ]
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
   const [isScrolled, setIsScrolled] = useState(false)
+  const pathname = usePathname()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -25,14 +27,6 @@ export default function Navigation() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id)
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' })
-      setIsOpen(false)
-    }
-  }
 
   return (
     <nav
@@ -45,23 +39,27 @@ export default function Navigation() {
       <div className="max-w-7xl mx-auto px-3 sm:px-4 md:px-6 lg:px-8">
         <div className="flex justify-between items-center h-14 sm:h-16">
           {/* Logo */}
-          <button
-            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+          <Link
+            href="/"
             className="font-heading text-lg sm:text-xl font-bold text-primary hover:text-accent transition-colors"
           >
             Mathematics
-          </button>
+          </Link>
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-0.5 lg:gap-1">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium text-foreground hover:text-primary transition-colors"
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`px-2 sm:px-3 py-2 text-xs sm:text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? 'text-primary'
+                    : 'text-foreground hover:text-primary'
+                }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </div>
 
@@ -78,13 +76,18 @@ export default function Navigation() {
         {isOpen && (
           <div className="md:hidden pb-4 border-t border-border">
             {navItems.map((item) => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className="block w-full text-left px-4 py-2 text-sm font-medium text-foreground hover:bg-muted transition-colors"
+              <Link
+                key={item.href}
+                href={item.href}
+                onClick={() => setIsOpen(false)}
+                className={`block w-full text-left px-4 py-2 text-sm font-medium transition-colors ${
+                  pathname === item.href
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-foreground hover:bg-muted'
+                }`}
               >
                 {item.label}
-              </button>
+              </Link>
             ))}
           </div>
         )}
