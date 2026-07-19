@@ -1,45 +1,30 @@
 import type { Metadata } from 'next'
-import { Playfair_Display, DM_Sans, Geist_Mono } from 'next/font/google'
+import { Fraunces, Inter, JetBrains_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const playfairDisplay = Playfair_Display({ 
-  subsets: ["latin"],
-  variable: '--font-playfair',
-  weight: ['400', '600', '700']
-});
-const dmSans = DM_Sans({ 
-  subsets: ["latin"],
-  variable: '--font-dm-sans',
-  weight: ['400', '500', '600']
-});
-const _geistMono = Geist_Mono({ subsets: ["latin"] });
+const fraunces = Fraunces({
+  subsets: ['latin'],
+  variable: '--font-fraunces',
+  axes: ['opsz'],
+})
+const inter = Inter({
+  subsets: ['latin'],
+  variable: '--font-inter',
+})
+const jetbrains = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains',
+})
 
 export const metadata: Metadata = {
-  title: 'BSED Mathematics | Portfolio',
-  description: 'Comprehensive portfolio showcasing innovative mathematics education through interactive lessons, demonstrations, and pedagogical philosophy',
-  generator: 'v0.app',
+  title: 'Elena Vasquez — Mathematics in Motion',
+  description:
+    'A mathematics education portfolio built like a living math object: interactive lessons, scroll-driven storytelling, and a decade of teaching in motion.',
   openGraph: {
-    title: 'BSED Mathematics | Portfolio',
-    description: 'Innovative mathematics education portfolio',
+    title: 'Elena Vasquez — Mathematics in Motion',
+    description: 'Mathematics education portfolio: interactive lessons, philosophy, and a decade of teaching.',
     type: 'website',
-  },
-  icons: {
-    icon: [
-      {
-        url: '/icon-light-32x32.png',
-        media: '(prefers-color-scheme: light)',
-      },
-      {
-        url: '/icon-dark-32x32.png',
-        media: '(prefers-color-scheme: dark)',
-      },
-      {
-        url: '/icon.svg',
-        type: 'image/svg+xml',
-      },
-    ],
-    apple: '/apple-icon.png',
   },
 }
 
@@ -49,11 +34,8 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html 
-      lang="en" 
-      className={`${playfairDisplay.variable} ${dmSans.variable}`}
-    >
-      <body className="font-sans antialiased bg-background text-foreground">
+    <html lang="en" className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable}`}>
+      <body>
         {children}
         {process.env.NODE_ENV === 'production' && <Analytics />}
       </body>

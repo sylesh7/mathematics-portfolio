@@ -1,136 +1,66 @@
 'use client'
 
-import { motion } from 'framer-motion'
-import { Award, Calendar } from 'lucide-react'
-
-const certifications = [
-  {
-    title: 'Master of Science in Mathematics Education',
-    issuer: 'State University',
-    year: '2012',
-    description: 'Advanced degree focusing on pedagogical innovations and curriculum design'
-  },
-  {
-    title: 'Professional Teaching Certificate - Mathematics',
-    issuer: 'Department of Education',
-    year: '2013',
-    description: 'Official certification authorizing instruction in mathematics K-12'
-  },
-  {
-    title: 'GeoGebra Certified Educator',
-    issuer: 'GeoGebra Institute',
-    year: '2018',
-    description: 'Expert-level certification in geometric software and dynamic mathematics'
-  },
-  {
-    title: 'Advanced Teacher Training - Problem Solving',
-    issuer: 'National Mathematics Association',
-    year: '2020',
-    description: 'Specialized training in mathematical problem-solving methodologies'
-  },
-  {
-    title: 'Online Learning Specialist Certification',
-    issuer: 'Online Education Academy',
-    year: '2021',
-    description: 'Certification in designing and delivering effective online mathematics instruction'
-  },
-  {
-    title: 'Educational Leadership Certificate',
-    issuer: 'State University',
-    year: '2022',
-    description: 'Leadership training for curriculum development and teacher mentoring'
-  }
-]
+import { useRef } from 'react'
+import { gsap, useGSAP, OK_MOTION } from '@/lib/gsap'
+import SectionHeading from '@/components/motion/SectionHeading'
+import TiltCard from '@/components/motion/TiltCard'
+import { certifications } from '@/lib/data'
 
 export default function Certifications() {
+  const ref = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(OK_MOTION, () => {
+        gsap.from('.cert-card', {
+          opacity: 0,
+          y: 60,
+          rotateX: -14,
+          transformPerspective: 800,
+          transformOrigin: 'center bottom',
+          duration: 0.9,
+          ease: 'power3.out',
+          stagger: 0.12,
+          scrollTrigger: { trigger: '.cert-grid', start: 'top 80%', once: true },
+        })
+      })
+    },
+    { scope: ref },
+  )
+
   return (
-    <section className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-background">
-      <div className="max-w-4xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
-            Certifications & Credentials
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground px-2">
-            Professional qualifications and continuing education achievements
-          </p>
-        </motion.div>
+    <section ref={ref} id="certifications" className="relative py-28 sm:py-36">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading number="06" eyebrow="Credentials" title="Proofs of qualification" />
 
-        {/* Certifications List */}
-        <div className="space-y-3 md:space-y-4">
-          {certifications.map((cert, idx) => (
-            <motion.div
-              key={cert.title}
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: idx * 0.08 }}
-              viewport={{ once: true }}
-              whileHover={{ x: 8 }}
-              className="p-4 md:p-6 bg-card rounded-lg border border-border hover:border-primary hover:shadow-lg transition-all duration-300 group"
-            >
-              <div className="flex items-start gap-3 md:gap-4">
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  transition={{ delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  className="w-10 md:w-12 h-10 md:h-12 rounded-full bg-gradient-to-br from-primary to-accent flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform"
-                >
-                  <Award className="text-primary-foreground" size={20} />
-                </motion.div>
-
-                <div className="flex-1 min-w-0">
-                  <h3 className="font-heading text-base md:text-lg font-bold text-foreground mb-1 md:mb-2 break-words">
-                    {cert.title}
+        <div className="cert-grid mt-16 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {certifications.map((c, i) => (
+            <div key={c.title} className={`cert-card ${i === 0 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
+              <TiltCard className="h-full">
+                <div className="glass relative flex h-full flex-col overflow-hidden rounded-3xl p-7">
+                  {/* embossed seal */}
+                  <div
+                    className="absolute -top-8 -right-8 grid size-28 place-items-center rounded-full border border-electric-500/25 font-display text-3xl text-electric-500/35"
+                    style={{ transform: 'translateZ(40px)' }}
+                  >
+                    ✓
+                  </div>
+                  <span className="font-mono text-xs font-bold text-electric-400">{c.year}</span>
+                  <h3 className="mt-3 font-display text-xl leading-snug text-ice" style={{ transform: 'translateZ(24px)' }}>
+                    {c.title}
                   </h3>
-
-                  <p className="text-primary font-semibold text-sm md:text-base mb-1 md:mb-2">
-                    {cert.issuer}
-                  </p>
-
-                  <p className="text-muted-foreground text-xs md:text-sm mb-2 md:mb-3 leading-relaxed">
-                    {cert.description}
-                  </p>
-
-                  <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-                    <Calendar size={16} />
-                    <span>{cert.year}</span>
+                  <p className="mt-1 font-mono text-[11px] tracking-widest text-mist/70 uppercase">{c.org}</p>
+                  <p className="mt-4 text-sm leading-relaxed text-ice-dim">{c.detail}</p>
+                  <div className="mt-auto pt-6">
+                    <div className="h-px w-full bg-gradient-to-r from-electric-500/50 via-mist/20 to-transparent" />
+                    <p className="mt-3 font-mono text-[10px] tracking-[0.3em] text-ice-dim/50 uppercase">verified credential</p>
                   </div>
                 </div>
-              </div>
-            </motion.div>
+              </TiltCard>
+            </div>
           ))}
         </div>
-
-        {/* Additional Info */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-12 p-8 bg-card rounded-lg border border-border text-center"
-        >
-          <h3 className="font-heading text-2xl font-bold text-foreground mb-3">
-            Commitment to Professional Development
-          </h3>
-          <p className="text-muted-foreground mb-4">
-            I regularly participate in professional development workshops, conferences, and training programs to stay current with the latest advances in mathematics education and pedagogy.
-          </p>
-          <div className="inline-block">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-2 bg-primary text-primary-foreground font-semibold rounded-lg hover:bg-primary/90 transition-colors"
-            >
-              View Credentials
-            </motion.button>
-          </div>
-        </motion.div>
       </div>
     </section>
   )

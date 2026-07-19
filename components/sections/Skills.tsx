@@ -1,138 +1,87 @@
 'use client'
 
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { gsap, useGSAP, OK_MOTION } from '@/lib/gsap'
+import SectionHeading from '@/components/motion/SectionHeading'
+import Magnetic from '@/components/motion/Magnetic'
+import { skills } from '@/lib/data'
 
-const skillCategories = [
-  {
-    category: 'Core Mathematics',
-    skills: ['Algebra', 'Geometry', 'Calculus', 'Statistics', 'Trigonometry', 'Linear Algebra']
-  },
-  {
-    category: 'Teaching Methods',
-    skills: ['Differentiation', 'Inquiry-Based Learning', 'Problem Solving', 'Cooperative Learning', 'Assessment Strategies', 'Student Engagement']
-  },
-  {
-    category: 'Technology Integration',
-    skills: ['GeoGebra', 'Desmos', 'Python Programming', 'Interactive Visualizations', 'Online Learning Platforms', 'Educational Software']
-  },
-  {
-    category: 'Professional Skills',
-    skills: ['Curriculum Design', 'Mentoring', 'Leadership', 'Communication', 'Research', 'Continuous Learning']
-  }
-]
-
+/**
+ * Magnetic skill cards over a slowly-orbiting ring system. Proficiency bars
+ * fill (scaleX, transform-only) when scrolled into view.
+ */
 export default function Skills() {
+  const ref = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(OK_MOTION, () => {
+        gsap.from('.skill-card', {
+          opacity: 0,
+          y: 54,
+          duration: 0.8,
+          ease: 'power3.out',
+          stagger: { each: 0.07, from: 'random' },
+          scrollTrigger: { trigger: '.skill-grid', start: 'top 80%', once: true },
+        })
+        gsap.utils.toArray<HTMLElement>('.skill-fill').forEach((bar) => {
+          gsap.fromTo(
+            bar,
+            { scaleX: 0 },
+            {
+              scaleX: Number(bar.dataset.pct) / 100,
+              duration: 1.3,
+              ease: 'power3.inOut',
+              scrollTrigger: { trigger: bar, start: 'top 88%', once: true },
+            },
+          )
+        })
+      })
+    },
+    { scope: ref },
+  )
+
   return (
-    <section id="skills" className="py-16 md:py-20 px-3 sm:px-4 md:px-8 bg-card">
-      <div className="max-w-6xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-          className="text-center mb-12 md:mb-16"
-        >
-          <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
-            Skills & Expertise
-          </h2>
-          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto px-2">
-            A comprehensive toolkit of knowledge and abilities developed through years of education and practice.
-          </p>
-        </motion.div>
+    <section ref={ref} id="skills" className="relative overflow-hidden bg-navy-900 py-28 sm:py-36">
+      {/* orbit system backdrop */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center opacity-40">
+        <div className="absolute size-[52rem] animate-orbit-slow rounded-full border border-dashed border-electric-500/15">
+          <span className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 font-display text-2xl text-electric-500/40">π</span>
+        </div>
+        <div className="absolute size-[36rem] animate-orbit-slower rounded-full border border-dashed border-electric-500/20">
+          <span className="absolute top-1/2 right-0 translate-x-1/2 -translate-y-1/2 font-display text-xl text-electric-500/40">∂</span>
+        </div>
+        <div className="absolute size-[70rem] animate-orbit-slow rounded-full border border-electric-500/8" />
+      </div>
 
-        {/* Skills Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-          {skillCategories.map((category, categoryIdx) => (
-            <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: categoryIdx * 0.1 }}
-              viewport={{ once: true }}
-              className="space-y-3 md:space-y-4"
-            >
-              <h3 className="font-heading text-xl md:text-2xl font-bold text-foreground mb-4 md:mb-6">
-                {category.category}
-              </h3>
+      <div className="relative mx-auto max-w-6xl px-6">
+        <SectionHeading number="05" eyebrow="Skills" title="The toolkit, to n decimal places" />
 
-              <div className="flex flex-wrap gap-2 md:gap-3">
-                {category.skills.map((skill, skillIdx) => (
-                  <motion.div
-                    key={skill}
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    transition={{ 
-                      duration: 0.3, 
-                      delay: categoryIdx * 0.1 + skillIdx * 0.05 
-                    }}
-                    viewport={{ once: true }}
-                    whileHover={{ y: -4, scale: 1.05 }}
-                    className="relative"
-                  >
-                    <div className="px-3 md:px-4 py-1.5 md:py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-full text-xs md:text-sm font-medium text-foreground hover:border-primary hover:shadow-lg transition-all cursor-default">
-                      {skill}
-                    </div>
-                    <motion.div
-                      animate={{ 
-                        x: [0, 2, -2, 0],
-                        y: [0, -1, 1, 0]
-                      }}
-                      transition={{ 
-                        duration: 3 + skillIdx * 0.2, 
-                        repeat: Infinity,
-                        delay: categoryIdx * 0.15 + skillIdx * 0.05
-                      }}
-                      className="absolute inset-0 pointer-events-none"
-                    />
-                  </motion.div>
-                ))}
+        <div className="skill-grid mt-16 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {skills.map((s) => (
+            <Magnetic key={s.name} strength={0.18} className="skill-card">
+              <div className="glass group h-full rounded-2xl p-5 hover:glass-bright">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <span className="grid size-10 place-items-center rounded-xl bg-electric-600/15 font-display text-xl text-electric-400 transition-colors group-hover:bg-electric-600/30 group-hover:text-ice">
+                      {s.glyph}
+                    </span>
+                    <h3 className="text-sm font-medium text-ice">{s.name}</h3>
+                  </div>
+                  <span className="font-mono text-xs text-electric-400 tabular-nums">{s.pct}%</span>
+                </div>
+                <div className="mt-4 h-1 overflow-hidden rounded-full bg-navy-700/80">
+                  <div
+                    className="skill-fill h-full w-full origin-left rounded-full bg-gradient-to-r from-electric-700 via-electric-500 to-mist will-change-transform motion-reduce:transform-none"
+                    data-pct={s.pct}
+                    style={{ transform: `scaleX(${s.pct / 100})` }}
+                  />
+                </div>
               </div>
-            </motion.div>
+            </Magnetic>
           ))}
         </div>
-
-        {/* Proficiency Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-12 md:mt-16 p-4 md:p-8 bg-background rounded-lg border border-border"
-        >
-          <h3 className="font-heading text-2xl md:text-3xl font-bold text-foreground mb-6 md:mb-8">
-            Proficiency Overview
-          </h3>
-          
-          <div className="space-y-4 md:space-y-6">
-            {[
-              { area: 'Mathematics Knowledge', level: 95 },
-              { area: 'Teaching Effectiveness', level: 92 },
-              { area: 'Technology Integration', level: 88 },
-              { area: 'Student Engagement', level: 94 },
-              { area: 'Curriculum Development', level: 90 }
-            ].map((item, idx) => (
-              <motion.div
-                key={item.area}
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="flex justify-between mb-2 text-sm md:text-base">
-                  <span className="font-semibold text-foreground">{item.area}</span>
-                  <span className="text-primary font-bold">{item.level}%</span>
-                </div>
-                <motion.div
-                  initial={{ width: 0 }}
-                  whileInView={{ width: `${item.level}%` }}
-                  transition={{ duration: 0.8, delay: idx * 0.1 }}
-                  viewport={{ once: true }}
-                  className="h-2 md:h-3 bg-gradient-to-r from-primary to-accent rounded-full"
-                />
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

@@ -1,183 +1,105 @@
 'use client'
 
-import { Timeline } from '@/components/ui/timeline'
-import { motion } from 'framer-motion'
+import { useRef } from 'react'
+import { gsap, useGSAP, OK_MOTION } from '@/lib/gsap'
+import SectionHeading from '@/components/motion/SectionHeading'
+import { timeline } from '@/lib/data'
 
-export default function TimelineSection() {
-  const timelineData = [
-    {
-      title: '2013',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Teaching Journey Begins
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Started my first teaching position with a passion for making mathematics accessible and engaging to all students.
-          </p>
-          <div className="inline-block px-4 py-2 bg-primary/10 border border-primary/30 rounded-lg">
-            <span className="text-xs md:text-sm font-semibold text-primary">First Position</span>
-          </div>
-        </motion.div>
-      ),
+/**
+ * Vertical timeline whose line draws itself (scaleY scrub) as you scroll.
+ * Cards alternate sides and drift at different parallax speeds; each node
+ * ignites as the line reaches it.
+ */
+export default function Timeline() {
+  const ref = useRef<HTMLElement>(null)
+
+  useGSAP(
+    () => {
+      const mm = gsap.matchMedia()
+      mm.add(OK_MOTION, () => {
+        gsap.fromTo(
+          '.tl-line',
+          { scaleY: 0 },
+          {
+            scaleY: 1,
+            ease: 'none',
+            scrollTrigger: { trigger: '.tl-body', start: 'top 62%', end: 'bottom 55%', scrub: 0.4 },
+          },
+        )
+
+        gsap.utils.toArray<HTMLElement>('.tl-item').forEach((item, i) => {
+          const card = item.querySelector('.tl-card')
+          const node = item.querySelector('.tl-node')
+
+          gsap.from(card, {
+            opacity: 0,
+            x: i % 2 ? 60 : -60,
+            duration: 0.85,
+            ease: 'power3.out',
+            scrollTrigger: { trigger: item, start: 'top 80%', once: true },
+          })
+          // alternate parallax speeds
+          gsap.fromTo(
+            card,
+            { y: i % 2 ? 44 : 18 },
+            {
+              y: i % 2 ? -44 : -18,
+              ease: 'none',
+              scrollTrigger: { trigger: item, start: 'top bottom', end: 'bottom top', scrub: true },
+            },
+          )
+          // node ignition when the drawn line arrives
+          ScrollTriggerIgnite(node as HTMLElement, item)
+        })
+
+        function ScrollTriggerIgnite(node: HTMLElement, item: HTMLElement) {
+          gsap.fromTo(
+            node,
+            { scale: 0.5, boxShadow: '0 0 0 0 rgba(59,130,246,0)' },
+            {
+              scale: 1,
+              boxShadow: '0 0 18px 4px rgba(59,130,246,0.65)',
+              backgroundColor: '#60a5fa',
+              duration: 0.4,
+              ease: 'back.out(2.5)',
+              scrollTrigger: { trigger: item, start: 'top 60%', toggleActions: 'play none none reverse' },
+            },
+          )
+        }
+      })
     },
-    {
-      title: '2015',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Curriculum Innovation
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Developed innovative teaching methodologies that integrate technology and real-world applications into mathematics education.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <span className="text-xs px-3 py-1 bg-accent/10 border border-accent/30 rounded-full text-accent font-medium">
-              Methodology Development
-            </span>
-            <span className="text-xs px-3 py-1 bg-accent/10 border border-accent/30 rounded-full text-accent font-medium">
-              Technology Integration
-            </span>
-          </div>
-        </motion.div>
-      ),
-    },
-    {
-      title: '2017',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Professional Recognition
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Received awards for innovative teaching methods and significant improvements in student achievement and engagement.
-          </p>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              Innovation Award
-            </div>
-            <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              Teacher Excellence Recognition
-            </div>
-            <div className="flex items-center gap-2 text-xs md:text-sm text-muted-foreground">
-              Student Achievement Excellence
-            </div>
-          </div>
-        </motion.div>
-      ),
-    },
-    {
-      title: '2019',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Educational Leadership
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Took on leadership roles in curriculum development and teacher training, mentoring educators across multiple institutions.
-          </p>
-          <div className="space-y-2">
-            <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              Mentoring multiple educators
-            </div>
-            <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              Curriculum Development Lead
-            </div>
-            <div className="flex items-center gap-2 text-xs md:text-sm text-foreground">
-              Teacher Training Programs
-            </div>
-          </div>
-        </motion.div>
-      ),
-    },
-    {
-      title: '2021',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Online Education Pioneer
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Adapted teaching to digital platforms, creating interactive online courses that maintain engagement and effectiveness during the pandemic.
-          </p>
-          <div className="flex flex-wrap gap-2">
-            <span className="text-xs px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium">
-              Online Platforms
-            </span>
-            <span className="text-xs px-3 py-1 bg-primary/10 border border-primary/30 rounded-full text-primary font-medium">
-              Interactive Courses
-            </span>
-          </div>
-        </motion.div>
-      ),
-    },
-    {
-      title: '2024',
-      content: (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-        >
-          <h3 className="font-heading text-lg md:text-2xl font-bold text-foreground mb-2">
-            Future Vision
-          </h3>
-          <p className="text-xs md:text-sm font-normal text-muted-foreground mb-4">
-            Continuing to innovate and explore new ways to make mathematics education transformative and impactful for the next generation.
-          </p>
-          <div className="inline-block px-4 py-2 bg-gradient-to-r from-primary/10 to-accent/10 border border-primary/30 rounded-lg">
-            <span className="text-xs md:text-sm font-semibold text-primary">Innovating Education</span>
-          </div>
-        </motion.div>
-      ),
-    },
-  ]
+    { scope: ref },
+  )
 
   return (
-    <section id="timeline" className="py-8 md:py-12 bg-background overflow-hidden relative">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        viewport={{ once: true }}
-        className="max-w-4xl mx-auto px-3 sm:px-4 md:px-8 mb-8 md:mb-12 text-center"
-      >
-        <h2 className="font-heading text-3xl sm:text-4xl md:text-5xl font-bold text-foreground mb-3 md:mb-4">
-          Professional Timeline
-        </h2>
-        <p className="text-base sm:text-lg text-muted-foreground px-2">
-          Milestones in my educational journey and career development.
-        </p>
-      </motion.div>
+    <section ref={ref} id="timeline" className="relative py-28 sm:py-36">
+      <div className="mx-auto max-w-6xl px-6">
+        <SectionHeading number="04" eyebrow="Trajectory" title="A decade, differentiated" align="center" />
 
-      <div className="w-full">
-        <Timeline data={timelineData} />
+        <div className="tl-body relative mx-auto mt-20 max-w-4xl">
+          {/* rail + drawn line */}
+          <div className="absolute top-0 bottom-0 left-4 w-px bg-navy-700/70 md:left-1/2" />
+          <div className="tl-line absolute top-0 bottom-0 left-4 w-px origin-top bg-gradient-to-b from-electric-600 via-electric-400 to-mist shadow-[0_0_12px_rgba(59,130,246,0.7)] will-change-transform md:left-1/2" />
+
+          <ol className="space-y-14 md:space-y-20">
+            {timeline.map((t, i) => (
+              <li key={t.year + t.title} className="tl-item relative pl-12 md:pl-0">
+                <span className="tl-node absolute top-1.5 left-4 z-10 size-3 -translate-x-1/2 rounded-full bg-navy-700 ring-4 ring-navy-950 md:left-1/2" />
+                <div className="md:grid md:grid-cols-2 md:gap-16">
+                  <div className={`${i % 2 ? 'md:order-2 md:pl-10' : 'md:pr-10 md:text-right'}`}>
+                    <div className="tl-card glass inline-block w-full rounded-2xl p-6 will-change-transform">
+                      <span className="font-mono text-sm font-bold text-electric-400">{t.year}</span>
+                      <h3 className="mt-2 font-display text-xl text-ice">{t.title}</h3>
+                      <p className="mt-0.5 font-mono text-[11px] tracking-wider text-mist/70 uppercase">{t.place}</p>
+                      <p className="mt-3 text-sm leading-relaxed text-ice-dim">{t.detail}</p>
+                    </div>
+                  </div>
+                  <div className={i % 2 ? 'md:order-1' : ''} />
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   )
